@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_xcamsnotifier" default="compile.module.xcamsnotifier">
+  <dirname property="module.xcamsnotifier.basedir" file="${ant.file.module_xcamsnotifier}"/>
+  
+  <property name="module.jdk.home.xcamsnotifier" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.xcamsnotifier" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.xcamsnotifier" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.xcamsnotifier" value="${compiler.args}"/>
+  
+  <property name="xcamsnotifier.output.dir" value="${module.xcamsnotifier.basedir}/out/production/XcamsNotifier"/>
+  <property name="xcamsnotifier.testoutput.dir" value="${module.xcamsnotifier.basedir}/out/test/XcamsNotifier"/>
+  
+  <path id="xcamsnotifier.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="xcamsnotifier.module.production.classpath">
+    <path refid="${module.jdk.classpath.xcamsnotifier}"/>
+    <path refid="library.djnativeswing.classpath"/>
+    <path refid="library.djnativeswing-swt.classpath"/>
+    <path refid="library.swt.classpath"/>
+    <path refid="library.jna-3.2.4.classpath"/>
+    <path refid="library.jna_windowutils.classpath"/>
+    <path refid="library.smack.classpath"/>
+    <path refid="library.smackx.classpath"/>
+  </path>
+  
+  <path id="xcamsnotifier.runtime.production.module.classpath">
+    <pathelement location="${xcamsnotifier.output.dir}"/>
+    <path refid="library.djnativeswing.classpath"/>
+    <path refid="library.djnativeswing-swt.classpath"/>
+    <path refid="library.swt.classpath"/>
+    <path refid="library.jna-3.2.4.classpath"/>
+    <path refid="library.jna_windowutils.classpath"/>
+    <path refid="library.smack.classpath"/>
+    <path refid="library.smackx.classpath"/>
+  </path>
+  
+  <path id="xcamsnotifier.module.classpath">
+    <path refid="${module.jdk.classpath.xcamsnotifier}"/>
+    <pathelement location="${xcamsnotifier.output.dir}"/>
+    <path refid="library.djnativeswing.classpath"/>
+    <path refid="library.djnativeswing-swt.classpath"/>
+    <path refid="library.swt.classpath"/>
+    <path refid="library.jna-3.2.4.classpath"/>
+    <path refid="library.jna_windowutils.classpath"/>
+    <path refid="library.smack.classpath"/>
+    <path refid="library.smackx.classpath"/>
+  </path>
+  
+  <path id="xcamsnotifier.runtime.module.classpath">
+    <pathelement location="${xcamsnotifier.testoutput.dir}"/>
+    <pathelement location="${xcamsnotifier.output.dir}"/>
+    <path refid="library.djnativeswing.classpath"/>
+    <path refid="library.djnativeswing-swt.classpath"/>
+    <path refid="library.swt.classpath"/>
+    <path refid="library.jna-3.2.4.classpath"/>
+    <path refid="library.jna_windowutils.classpath"/>
+    <path refid="library.smack.classpath"/>
+    <path refid="library.smackx.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.xcamsnotifier">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.xcamsnotifier">
+    <patternset refid="excluded.from.module.xcamsnotifier"/>
+  </patternset>
+  
+  <path id="xcamsnotifier.module.sourcepath">
+    <dirset dir="${module.xcamsnotifier.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.xcamsnotifier" depends="compile.module.xcamsnotifier.production,compile.module.xcamsnotifier.tests" description="Compile module XcamsNotifier"/>
+  
+  <target name="compile.module.xcamsnotifier.production" depends="register.custom.compilers" description="Compile module XcamsNotifier; production classes">
+    <mkdir dir="${xcamsnotifier.output.dir}"/>
+    <javac2 destdir="${xcamsnotifier.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.xcamsnotifier}/javac">
+      <compilerarg line="${compiler.args.xcamsnotifier}"/>
+      <bootclasspath refid="xcamsnotifier.module.bootclasspath"/>
+      <classpath refid="xcamsnotifier.module.production.classpath"/>
+      <src refid="xcamsnotifier.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.xcamsnotifier"/>
+    </javac2>
+    
+    <copy todir="${xcamsnotifier.output.dir}">
+      <fileset dir="${module.xcamsnotifier.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.xcamsnotifier.tests" depends="register.custom.compilers,compile.module.xcamsnotifier.production" description="compile module XcamsNotifier; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.xcamsnotifier" description="cleanup module">
+    <delete dir="${xcamsnotifier.output.dir}"/>
+    <delete dir="${xcamsnotifier.testoutput.dir}"/>
+  </target>
+</project>
